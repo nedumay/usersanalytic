@@ -1,40 +1,38 @@
 package com.example.usersanalytical.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.usersanalytical.domain.model.Users
-import com.example.usersanalytical.domain.usecase.GetUserFromDbUseCase
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.AuthStateListener
+import com.google.firebase.auth.FirebaseUser
 
-class MainViewModel @Inject constructor(
-    private val getUserFromDbUseCase: GetUserFromDbUseCase
-) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    private val _userLogin = MutableLiveData<Users>()
-    val userLogin: LiveData<Users>
-        get() = _userLogin
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private val _errorInputNameHaveBd = MutableLiveData<Boolean>()
-    val errorInputNameHaveBd: LiveData<Boolean>
-        get() = _errorInputNameHaveBd
+    private var _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
 
-    fun getUser(name: String, password: String){
-        viewModelScope.launch {
-            val userDb = getUserFromDbUseCase.invoke(name = name, password = password)
-            Log.d("getUser","UserDb: $userDb")
-            if(userDb.name  != "" && userDb.password != ""){
-                _userLogin.value = userDb
-                Log.d("getUser","User: ${_userLogin.value}")
-                _errorInputNameHaveBd.value = false
-                Log.d("getUser","Error LD false ${_errorInputNameHaveBd.value}")
-            } else{
-                _errorInputNameHaveBd.value = true
-                Log.d("getUser","Error LD true ${_errorInputNameHaveBd.value}")
+    private var _firebaseUser = MutableLiveData<FirebaseUser>()
+    val firebaseUser: LiveData<FirebaseUser>
+        get() = _firebaseUser
+
+    init {
+        auth.addAuthStateListener(AuthStateListener { firebaseAuth ->
+            if (firebaseAuth.currentUser != null) {
+                _firebaseUser.value = firebaseAuth.currentUser
             }
+        })
+    }
+
+    fun login(email: String, password: String){
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            //_firebaseUser.value  = it.user
+        }.addOnFailureListener { e ->
+            _error.value = e.message
         }
     }
+
 }

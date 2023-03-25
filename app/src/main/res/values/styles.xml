@@ -20,7 +20,7 @@
     <style name="input_edit_text">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">11sp</item>
-        <item name="android:inputType">textCapWords</item>
+        <item name="android:inputType">textEmailSubject</item>
         <item name="android:gravity">fill</item>
     </style>
     <!-- Style Button-->
