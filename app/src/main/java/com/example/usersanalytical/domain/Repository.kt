@@ -4,5 +4,5 @@ import com.example.usersanalytical.domain.model.Users
 
 interface Repository {
 
-    suspend fun getUserFromDb(name: String) : Users
+    suspend fun getUserFromDb(name: String, password: String) : Users
 }

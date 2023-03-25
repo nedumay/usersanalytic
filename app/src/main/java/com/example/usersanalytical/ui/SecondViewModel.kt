@@ -22,11 +22,11 @@ class SecondViewModel @Inject constructor(
     val errorNameHaveBd: LiveData<Boolean>
         get() = _errorNameHaveBd
 
-    fun getUser(name: String){
+    fun getUser(name: String, password: String){
         viewModelScope.launch {
-            val userDb = getUserFromDbUseCase.invoke(name = name)
+            val userDb = getUserFromDbUseCase.invoke(name = name, password = password)
             Log.d("getUser","UserDb: $userDb")
-            if(userDb.name  != ""){
+            if(userDb.name  != "" && userDb.password != ""){
                 _user.value = userDb
                 Log.d("getUser","User: ${_user.value}")
                 _errorNameHaveBd.value = false

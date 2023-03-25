@@ -12,8 +12,8 @@ class RepositoryImpl @Inject constructor(
     private val usersDao: UsersDao,
     private val mapper: Mapper
 ) : Repository {
-    override suspend fun getUserFromDb(name: String): Users {
-        val dbModel = usersDao.getName(name)
+    override suspend fun getUserFromDb(name: String, password: String): Users {
+        val dbModel = usersDao.getName(name, password)
         Log.d("getUser","UserDb: $dbModel")
         return mapper.mapDbModelToEntity(dbModel)
     }

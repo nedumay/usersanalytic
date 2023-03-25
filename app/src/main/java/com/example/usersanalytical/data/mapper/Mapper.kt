@@ -9,6 +9,7 @@ class Mapper @Inject constructor() {
     fun mapDbModelToEntity(usersDbModel: UsersDbModel?) = Users(
         id = usersDbModel?.id ?: 0,
         name = usersDbModel?.name ?: "",
+        password = usersDbModel?.password ?: "",
         year_old = usersDbModel?.year_old ?: "",
         hemoglobin = usersDbModel?.hemoglobin ?: "",
         erythrocytes = usersDbModel?.erythrocytes ?: "",

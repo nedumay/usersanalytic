@@ -9,5 +9,6 @@ data class Users(
     val platelets: String,
     val lymphocytes: String,
     val monocytes: String,
-    val basophils: String
+    val basophils: String,
+    val password: String
 )

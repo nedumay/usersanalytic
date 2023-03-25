@@ -34,5 +34,8 @@ data class UsersDbModel(
     val monocytes: String,
     @NonNull
     @ColumnInfo("basophils")
-    val basophils: String
+    val basophils: String,
+    @NonNull
+    @ColumnInfo("password")
+    val password: String
     )

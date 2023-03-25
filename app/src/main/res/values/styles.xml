@@ -29,4 +29,15 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <!-- Style input layout password-->
+    <style name="text_input_layout_password" parent="text_input_layout">
+        <item name="endIconMode">password_toggle</item>
+        <item name="endIconTint">@color/icon_tint</item>
+    </style>
+
+    <!-- Style input edit text password-->
+    <style name="input_edit_text_password" parent="input_edit_text">
+        <item name="android:inputType">textPassword</item>
+    </style>
 </resources>

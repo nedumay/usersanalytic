@@ -22,11 +22,11 @@ class MainViewModel @Inject constructor(
     val errorInputNameHaveBd: LiveData<Boolean>
         get() = _errorInputNameHaveBd
 
-    fun getUser(name: String){
+    fun getUser(name: String, password: String){
         viewModelScope.launch {
-            val userDb = getUserFromDbUseCase.invoke(name = name)
+            val userDb = getUserFromDbUseCase.invoke(name = name, password = password)
             Log.d("getUser","UserDb: $userDb")
-            if(userDb.name  != ""){
+            if(userDb.name  != "" && userDb.password != ""){
                 _userLogin.value = userDb
                 Log.d("getUser","User: ${_userLogin.value}")
                 _errorInputNameHaveBd.value = false

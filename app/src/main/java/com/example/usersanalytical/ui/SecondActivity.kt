@@ -33,9 +33,10 @@ class SecondActivity : AppCompatActivity() {
             return
         }
         val name = intent.getStringExtra(EXTRA_NAME)!!
+        val password = intent.getStringExtra(EXTRA_PASSWORD)!!
 
         secondViewModel = ViewModelProvider(this, viewModelFactory)[SecondViewModel::class.java]
-        secondViewModel.getUser(name)
+        secondViewModel.getUser(name, password = password)
         secondViewModel.user.observe(this){
             with(binding){
                 textViewName.text = "Клиент: ${it.name}"
@@ -48,15 +49,21 @@ class SecondActivity : AppCompatActivity() {
                 textViewBasophilsVal.text = it.basophils
             }
         }
-
+        binding.buttonExit.setOnClickListener {
+            val intent = MainActivity.newIntent(this)
+            startActivity(intent)
+            finish()
+        }
     }
 
     companion object{
         private const val EXTRA_NAME = "name"
+        private const val EXTRA_PASSWORD = "password"
 
-        fun newIntent(context: Context, name:String): Intent {
+        fun newIntent(context: Context, name:String, password: String): Intent {
             val intent = Intent(context, SecondActivity::class.java)
             intent.putExtra(EXTRA_NAME,name)
+            intent.putExtra(EXTRA_PASSWORD,password)
             return intent
         }
     }
